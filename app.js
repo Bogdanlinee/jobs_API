@@ -11,18 +11,13 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 // DB connection
 const connectDB = require('./db/connect.js');
 
-// auth middleware
+// router middlewares
 const authMiddleware = require('./routes/auth.js');
 const jobMiddleware = require('./routes/jobs.js');
 
 app.use(express.json());
 app.use('/api/v1/auth', authMiddleware);
 app.use('/api/v1/jobs', jobMiddleware);
-
-// routes
-app.get('*', (req, res) => {
-  res.send('jobs api');
-});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
