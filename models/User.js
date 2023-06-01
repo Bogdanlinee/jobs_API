@@ -28,8 +28,13 @@ UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-UserSchema.methods.getToken = function (cb) {
-  return jwt.sign({ userId: this._id, name: this.name }, process.env.JWT_SECRET, { expiresIn: '30d' });
+UserSchema.methods.createJWT = function () {
+  return jwt.sign({ userId: this._id, name: this.name }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_LIFETIME });
+};
+
+UserSchema.methods.comparePassword = async function (passToCompare) {
+  const isPassMatch = await bcrypt.compare(passToCompare, this.password);
+  return isPassMatch;
 };
 
 module.exports = mongoose.model('User', UserSchema);
