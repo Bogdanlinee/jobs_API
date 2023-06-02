@@ -1,3 +1,4 @@
+const JobSchema = require('../models/Job.js');
 const { StatusCodes } = require('http-status-codes');
 
 const getJob = async (req, res) => {
@@ -9,7 +10,9 @@ const getAllJobs = async (req, res) => {
 }
 
 const createJob = async (req, res) => {
-  res.status(StatusCodes.CREATED).json({ created: 'createJob' });
+  const job = await JobSchema.create(req.body);
+  console.log(job);
+  res.status(StatusCodes.CREATED).json(req.user);
 };
 
 const changeJob = async (req, res) => {
