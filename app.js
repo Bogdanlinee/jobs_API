@@ -26,7 +26,8 @@ const authUser = require('./middleware/authentication.js');
 app.use(express.json());
 
 // security middlewares
-app.use(rateLimiter({	windowMs: 15 * 60 * 1000,	max: 100}));
+app.set('trust proxy', numberOfProxies)
+app.use(rateLimiter({ windowMs: 15 * 60 * 1000, max: 100 }));
 app.use(helmet());
 app.use(cors());
 app.use(xss());
